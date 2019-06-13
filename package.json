@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/miladBentaiba/todo-with-node/issues"
   },
-  "homepage": "https://github.com/miladBentaiba/todo-with-node#readme"
+  "homepage": "https://github.com/miladBentaiba/todo-with-node#readme",
+  "dependencies": {
+    "edit-json-file": "^1.2.1"
+  }
 }

@@ -13,18 +13,44 @@ function help() {
 
 function list() {
   // node main.js list
-  let rawdata = fs.readFileSync('todos.json');
-  let todos = JSON.parse(rawdata);
-  console.log('printing', todos.length, 'notes')
-  for (todo of todos) {
-    console.log('Title:', todo.title, 'Body:', todo.body)
+  try {
+    let fd = fs.readFileSync('todos.json').toString()
+    let todos = JSON.parse(fd);
+    console.log('printing', todos.length, 'notes')
+    for (todo of todos) {
+      console.log('Title:', todo.title, 'Body:', todo.body)
+    }
+  } catch (error) {
+    console.error(error);
   }
 }
 
 function add() {
   // node main.js add
   // node main.js add --title react --body learn_react
+  try {
+    let newtodo = {}
 
+    let indexTitle = process.argv.findIndex((el) => el === '--title')
+    if (indexTitle === -1 || typeof process.argv[indexTitle + 1] === 'undefined') {
+      console.log('Missing required argument: --title')
+      return
+    }
+    else newtodo['Title'] = process.argv[indexTitle + 1]
+
+    let indexBody = process.argv.findIndex((el) => el === '--body')
+    if (indexBody === -1 || typeof process.argv[indexBody + 1] === 'undefined') {
+      console.log('Missing required argument: --body')
+      return
+    }
+    else newtodo['Body'] = process.argv[indexBody + 1]
+
+    let todos = JSON.parse(fs.readFileSync('todos.json').toString());
+
+    fs.writeFileSync('todos.json', JSON.stringify(todos.concat([newtodo])))
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 function read() {
@@ -39,15 +65,13 @@ function remove() {
 
 }
 
-for (let i = 2; i < process.argv.length; i++) {
-  switch (process.argv[2]) {
-    case '--help': help(); break;
-    case 'list': list(); break;
-    case 'add': add(); break;
-    case 'read': read(); break;
-    case 'remove': remove(); break;
-    default: help(); break;
-  }
+switch (process.argv[2]) {
+  case '--help': help(); break;
+  case 'list': list(); break;
+  case 'add': add(); break;
+  case 'read': read(); break;
+  case 'remove': remove(); break;
+  default: help(); break;
 }
 
 if (process.argv.length < 3) help();
