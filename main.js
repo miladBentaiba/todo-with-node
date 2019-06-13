@@ -16,7 +16,7 @@ function list() {
   try {
     let fd = fs.readFileSync('todos.json').toString()
     let todos = JSON.parse(fd);
-    console.log('printing', todos.length, 'notes', todos)
+    console.log('printing', todos.length, 'notes')
 
     for (let todo of todos) {
       console.log('- Title:', todo.Title, '\t- Body:', todo.Body)
@@ -69,13 +69,8 @@ function read() {
 
     let todos = JSON.parse(fs.readFileSync('todos.json').toString());
     let todo = todos.find(x => x.Title === title)
-    if (todo){
-      console.log('- Title:', todo.Title, '\t- Body:', todo.Body)
-    }
-    else{
-      console.log('Todo not find')
-    }
-    
+    if (todo) console.log('- Title:', todo.Title, '\t- Body:', todo.Body)
+    else console.log('Todo not found')
   } catch (error) {
     console.error(error);
   }
@@ -84,7 +79,27 @@ function read() {
 function remove() {
   // node main.js remove
   // node main.js remove --title react
+  try {
+    let title = ''
 
+    let indexTitle = process.argv.findIndex((el) => el === '--title')
+    if (indexTitle === -1 || typeof process.argv[indexTitle + 1] === 'undefined') {
+      console.log('Missing required argument: --title')
+      return
+    }
+    else title = process.argv[indexTitle + 1]
+
+    let todos = JSON.parse(fs.readFileSync('todos.json').toString());
+    let todo = todos.find(x => x.Title === title)
+    todos.splice(todos.indexOf(todos.find(x => x.Title === title)), 1);
+    
+
+    fs.writeFileSync('todos.json', JSON.stringify(todos))
+    console.log('Todo: - Title:', todo.Title, ', - Body:', todo.Body, 'removed successfully')
+    
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 switch (process.argv[2]) {
