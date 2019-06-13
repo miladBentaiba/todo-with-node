@@ -1,0 +1,23 @@
+{
+  "name": "todo-node",
+  "version": "1.0.0",
+  "description": "to do in node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miladBentaiba/todo-with-node.git"
+  },
+  "keywords": [
+    "todo",
+    "list"
+  ],
+  "author": "Miled Basma Bentaiba",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/miladBentaiba/todo-with-node/issues"
+  },
+  "homepage": "https://github.com/miladBentaiba/todo-with-node#readme"
+}
