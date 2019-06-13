@@ -57,7 +57,28 @@ function add() {
 function read() {
   // node main.js read
   // node main.js read --title react
+  try {
+    let title = ''
 
+    let indexTitle = process.argv.findIndex((el) => el === '--title')
+    if (indexTitle === -1 || typeof process.argv[indexTitle + 1] === 'undefined') {
+      console.log('Missing required argument: --title')
+      return
+    }
+    else title = process.argv[indexTitle + 1]
+
+    let todos = JSON.parse(fs.readFileSync('todos.json').toString());
+    let todo = todos.find(x => x.Title === title)
+    if (todo){
+      console.log('- Title:', todo.Title, '\t- Body:', todo.Body)
+    }
+    else{
+      console.log('Todo not find')
+    }
+    
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 function remove() {
