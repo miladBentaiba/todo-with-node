@@ -21,6 +21,6 @@
   },
   "homepage": "https://github.com/miladBentaiba/todo-with-node#readme",
   "dependencies": {
-    "lodash": "^4.17.11"
+    
   }
 }

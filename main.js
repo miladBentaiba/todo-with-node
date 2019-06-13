@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 
+
 function help() {
   // node main.js --help
   console.log('node main.js --help \t\t\t\t\t for help')
@@ -108,8 +109,8 @@ switch (process.argv[2]) {
   case 'add': add(); break;
   case 'read': read(); break;
   case 'remove': remove(); break;
+  case '--help': help(); break;
   default: help(); break;
 }
 
 if (process.argv.length < 3) help();
-
