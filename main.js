@@ -1,5 +1,4 @@
 'use strict';
-
 const fs = require('fs');
 
 
@@ -14,7 +13,6 @@ function help() {
 
 function list() {
   // node main.js list
-  try {
     let fd = fs.readFileSync('todos.json').toString()
     let todos = JSON.parse(fd);
     console.log('printing', todos.length, 'notes')
@@ -22,85 +20,68 @@ function list() {
     for (let todo of todos) {
       console.log('- Title:', todo.Title, '\t- Body:', todo.Body)
     }
-  } catch (error) {
-    console.error(error);
-  }
 }
 
 function add() {
   // node main.js add
   // node main.js add --title react --body learn_react
-  try {
-    let newtodo = {}
+  let newtodo = {}
 
-    let indexTitle = process.argv.findIndex((el) => el === '--title')
-    if (indexTitle === -1 || typeof process.argv[indexTitle + 1] === 'undefined') {
-      console.log('Missing required argument: --title')
-      return
-    }
-    else newtodo['Title'] = process.argv[indexTitle + 1]
-
-    let indexBody = process.argv.findIndex((el) => el === '--body')
-    if (indexBody === -1 || typeof process.argv[indexBody + 1] === 'undefined') {
-      console.log('Missing required argument: --body')
-      return
-    }
-    else newtodo['Body'] = process.argv[indexBody + 1]
-
-    let todos = JSON.parse(fs.readFileSync('todos.json').toString());
-
-    fs.writeFileSync('todos.json', JSON.stringify(todos.concat([newtodo])))
-  } catch (error) {
-    console.error(error);
+  let indexTitle = process.argv.findIndex((el) => el === '--title')
+  if (indexTitle === -1 || typeof process.argv[indexTitle + 1] === 'undefined') {
+    console.log('Missing required argument: --title')
+    return
   }
+  else newtodo['Title'] = process.argv[indexTitle + 1]
+
+  let indexBody = process.argv.findIndex((el) => el === '--body')
+  if (indexBody === -1 || typeof process.argv[indexBody + 1] === 'undefined') {
+    console.log('Missing required argument: --body')
+    return
+  }
+  else newtodo['Body'] = process.argv[indexBody + 1]
+
+  let todos = JSON.parse(fs.readFileSync('todos.json').toString());
+
+  fs.writeFileSync('todos.json', JSON.stringify(todos.concat([newtodo])))
 }
 
 function read() {
   // node main.js read
   // node main.js read --title react
-  try {
-    let title = ''
+  let title = ''
 
-    let indexTitle = process.argv.findIndex((el) => el === '--title')
-    if (indexTitle === -1 || typeof process.argv[indexTitle + 1] === 'undefined') {
-      console.log('Missing required argument: --title')
-      return
-    }
-    else title = process.argv[indexTitle + 1]
-
-    let todos = JSON.parse(fs.readFileSync('todos.json').toString());
-    let todo = todos.find(x => x.Title === title)
-    if (todo) console.log('- Title:', todo.Title, '\t- Body:', todo.Body)
-    else console.log('Todo not found')
-  } catch (error) {
-    console.error(error);
+  let indexTitle = process.argv.findIndex((el) => el === '--title')
+  if (indexTitle === -1 || typeof process.argv[indexTitle + 1] === 'undefined') {
+    console.log('Missing required argument: --title')
+    return
   }
+  else title = process.argv[indexTitle + 1]
+
+  let todos = JSON.parse(fs.readFileSync('todos.json').toString());
+  let todo = todos.find(x => x.Title === title)
+  if (todo) console.log('- Title:', todo.Title, '\t- Body:', todo.Body)
+  else console.log('Todo not found')
 }
 
 function remove() {
   // node main.js remove
   // node main.js remove --title react
-  try {
-    let title = ''
+  let title = ''
 
-    let indexTitle = process.argv.findIndex((el) => el === '--title')
-    if (indexTitle === -1 || typeof process.argv[indexTitle + 1] === 'undefined') {
-      console.log('Missing required argument: --title')
-      return
-    }
-    else title = process.argv[indexTitle + 1]
-
-    let todos = JSON.parse(fs.readFileSync('todos.json').toString());
-    let todo = todos.find(x => x.Title === title)
-    todos.splice(todos.indexOf(todos.find(x => x.Title === title)), 1);
-    
-
-    fs.writeFileSync('todos.json', JSON.stringify(todos))
-    console.log('Todo: - Title:', todo.Title, ', - Body:', todo.Body, 'removed successfully')
-    
-  } catch (error) {
-    console.error(error);
+  let indexTitle = process.argv.findIndex((el) => el === '--title')
+  if (indexTitle === -1 || typeof process.argv[indexTitle + 1] === 'undefined') {
+    console.log('Missing required argument: --title')
+    return
   }
+  else title = process.argv[indexTitle + 1]
+
+  let todos = JSON.parse(fs.readFileSync('todos.json').toString());
+  let todo = todos.find(x => x.Title === title)
+  todos.splice(todos.indexOf(todos.find(x => x.Title === title)), 1);
+
+  fs.writeFileSync('todos.json', JSON.stringify(todos))
+  console.log('Todo: - Title:', todo.Title, ', - Body:', todo.Body, 'removed successfully')
 }
 
 switch (process.argv[2]) {
@@ -109,7 +90,6 @@ switch (process.argv[2]) {
   case 'add': add(); break;
   case 'read': read(); break;
   case 'remove': remove(); break;
-  case '--help': help(); break;
   default: help(); break;
 }
 
