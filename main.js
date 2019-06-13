@@ -16,9 +16,10 @@ function list() {
   try {
     let fd = fs.readFileSync('todos.json').toString()
     let todos = JSON.parse(fd);
-    console.log('printing', todos.length, 'notes')
-    for (todo of todos) {
-      console.log('Title:', todo.title, 'Body:', todo.body)
+    console.log('printing', todos.length, 'notes', todos)
+
+    for (let todo of todos) {
+      console.log('- Title:', todo.Title, '\t- Body:', todo.Body)
     }
   } catch (error) {
     console.error(error);
